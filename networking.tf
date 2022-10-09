@@ -22,6 +22,8 @@ resource "google_compute_subnetwork" "k8s_subnet" {
 # Firewalls section
 ######
 
+# allow internal communication across all protocols
+
 resource "google_compute_firewall" "allow_all_internal" {
     name    = "k8s-internal-firewall"
     network = google_compute_network.k8s_network.name
@@ -41,6 +43,8 @@ resource "google_compute_firewall" "allow_all_internal" {
 
     source_ranges = ["10.240.0.0/24", "10.200.0.0/16"]
 }
+
+# allow external communication on SSH, ICMP, HTTPS
 
 resource "google_compute_firewall" "allow_all_external" {
     name    = "k8s-external-firewall"
@@ -62,8 +66,11 @@ resource "google_compute_firewall" "allow_all_external" {
 # Static IP section
 ######
 
-# static ip for the external load balancer fronting the k8s API servers
+# static ip for the external load balancer fronting the k8s API servers.
+# this public ip allows for communication with instances outside the network created above
+# (ie internet traffic)
 
 resource "google_compute_address" "k8s_staticip" {
-    name  = "k8s-static-ip"
+   name  = "k8s-static-ip"
+   region= var.region
 }

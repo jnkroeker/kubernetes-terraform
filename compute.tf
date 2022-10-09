@@ -10,8 +10,8 @@
 # will be generated for you and stored in the project or instance metadata
 
 resource "google_compute_instance" "k8s_controller" {
-    boot_disk {
-        auto_delete = true
+   boot_disk {
+       auto_delete = true
 
         initialize_params {
             image = var.controller_image
