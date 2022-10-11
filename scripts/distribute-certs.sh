@@ -22,3 +22,5 @@ distribute_certs_and_keys () {
 }
 
 distribute_certs_and_keys
+
+# verify all certs were distributed to the correct nodes with `gcloud compute ssh ${instance}`

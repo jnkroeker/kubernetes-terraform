@@ -1,9 +1,9 @@
 #!/bin/bash
 
 check_prereqs () {
-    declare -a req_progs=("cfssl" "cfssljson")
+    declare -a required_programs=("cfssl" "cfssljson")
 
-    for prog in "${req_progs[@]}"
+    for prog in "${required_programs[@]}"
     do
         if ! which "${prog}" > /dev/null 2>&1; then
             echo "${prog} not installed. Please install it then rerun this script."

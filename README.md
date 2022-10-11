@@ -2,6 +2,9 @@
 
 1. Execute `terraform plan` to see what GCP resources will be provisioned and `terraform apply` to realize the plan.
 
+2. create /certs sub-directories: admin, certificate-authority, controller-manager, kube-api-server, 
+kube-proxy, kube-scheduler, kubelet-client, service-account
+
 2. Execute `./create-ca.sh` in scripts directory to create a Certificate  Authority. The CA will be used to generate addional TLS certificates.
 
 3. Execute `./gen-certs.sh` in scripts directory to generate all necessary certificates for k8s from the Certificate Authority.
