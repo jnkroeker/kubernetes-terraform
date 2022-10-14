@@ -10,3 +10,7 @@ kube-proxy, kube-scheduler, kubelet-client, service-account
 3. Execute `./gen-certs.sh` in scripts directory to generate all necessary certificates for k8s from the Certificate Authority.
 
 4. Execute `./distribute-certs.sh` to move all the correct keys and certificates to the compute resources
+
+5. Execute `./gen-kubeconfigs.sh` to create worker and controller kubeconfig files
+
+6. Execute `./distribute-kubeconfigs.sh` to distribute the kubeconfig files 

@@ -4,6 +4,9 @@
 # Never publish certificates
 **/certs/*
 
+# kubeconfig files
+**/kubeconfig/*
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
