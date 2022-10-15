@@ -5,7 +5,10 @@
 **/certs/*
 
 # kubeconfig files
-**/kubeconfig/*
+/kubeconfig/*
+
+# data encryption configuration
+/data-encryption/*
 
 # .tfstate files
 *.tfstate
