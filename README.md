@@ -20,3 +20,9 @@ kube-proxy, kube-scheduler, kubelet-client, service-account
 8. Execute `./distribute-data-encryption.sh` from within scripts/data-encryption directory to distribute the encryption config file to conroller nodes.
 
 9. Execute `./bootstrap-etcd.sh` from within scripts/etcd directory to ssh into each controller, download etcd and configure a systemd service for etcd
+
+10. Execute `./bootstrap-control-plane.sh` from within scripts/control-plane directory to configure kube API server, Controller Manager and Kube Scheduler on each controller node.
+
+11. Execute `./bootstrap-rbac.sh` from within scripts/control-plane directory
+
+12. Execute `./bootstrap-front-end-lb.sh` from within scripts/control-plane directory
