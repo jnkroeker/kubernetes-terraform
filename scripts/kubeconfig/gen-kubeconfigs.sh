@@ -75,7 +75,7 @@ gen_kube_controller_manager_kubeconfig() {
 }
 
 gen_kube_scheduler_kubeconfig() {
-    kubectl config set-cluster kubernetes-the-hard-way \
+    kubectl config set-cluster kubernetes-cluster \
     --certificate-authority=../../certs/certificate-authority/ca.pem \
     --embed-certs=true \
     --server=https://127.0.0.1:6443 \
@@ -96,7 +96,7 @@ gen_kube_scheduler_kubeconfig() {
 }
 
 gen_admin_kubeconfig() {
-    kubectl config set-cluster kubernetes-the-hard-way \
+    kubectl config set-cluster kubernetes-cluster \
     --certificate-authority=../../certs/certificate-authority/ca.pem \
     --embed-certs=true \
     --server=https://127.0.0.1:6443 \
