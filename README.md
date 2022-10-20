@@ -28,3 +28,17 @@ kube-proxy, kube-scheduler, kubelet-client, service-account
 13. Execute `./bootstrap-front-end-lb.sh` from within scripts/control-plane directory
 
 14. Execute `./provision-workers.sh` from within scripts/workers directory
+
+15. Execute `./gen-kubectl-kubeconfig.sh` from within scripts/kubeconfig directory
+
+16. Execute `./provision-pod-network.sh` from within scripts/pod-network
+
+17. Execute `./deploy-coredns.sh` from within scripts/dns directory
+
+## Once the cluster is up, perform a smoke test
+
+https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/13-smoke-test.md
+
+## Tear everything down when finished, or else you will have trouble starting another cluster
+
+Execute `./tear-down-cluster.sh` in scripts/wrap-up then execute `terraform destroy`

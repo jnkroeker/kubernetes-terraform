@@ -74,6 +74,8 @@ gen_kube_controller_manager_kubeconfig() {
 
 }
 
+# kubeconfig file for kube-scheduler service 
+
 gen_kube_scheduler_kubeconfig() {
     kubectl config set-cluster kubernetes-cluster \
     --certificate-authority=../../certs/certificate-authority/ca.pem \
@@ -94,6 +96,8 @@ gen_kube_scheduler_kubeconfig() {
 
     kubectl config use-context default --kubeconfig=../../kubeconfig/kube-scheduler.kubeconfig
 }
+
+# kubeconfig for admin user. to be placed on each controller node.
 
 gen_admin_kubeconfig() {
     kubectl config set-cluster kubernetes-cluster \
