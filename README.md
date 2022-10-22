@@ -41,4 +41,6 @@ https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/13-s
 
 ## Tear everything down when finished, or else you will have trouble starting another cluster
 
-Execute `./tear-down-cluster.sh` in scripts/wrap-up then execute `terraform destroy`
+Execute `./tear-down-cluster.sh` in scripts/wrap-up then 
+
+Execute `terraform destroy` from project root (/kubernetes-terraform/)
