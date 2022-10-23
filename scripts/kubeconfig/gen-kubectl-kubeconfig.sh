@@ -7,15 +7,24 @@ gen_kubectl_kubeconfig () {
     KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe k8s-static-ip \
         --region $(gcloud config get-value compute/region) \
         --format 'value(address)')
-
+    
     kubectl config set-cluster kubernetes-cluster \
-        --certificate-authority=../../certs/certificate-authority/ca.pem \
+        --certificate-authority=ca.pem \
         --embed-certs=true \
         --server=https://${KUBERNETES_PUBLIC_ADDRESS}:6443
 
+    # kubectl config set-cluster kubernetes-cluster \
+    #     --certificate-authority=../../certs/certificate-authority/ca.pem \
+    #     --embed-certs=true \
+    #     --server=https://${KUBERNETES_PUBLIC_ADDRESS}:6443
+
     kubectl config set-credentials admin \
-        --client-certificate=../../certs/admin/admin.pem \
-        --client-key=../../certs/admin/admin-key.pem
+        --client-certificate=admin.pem \
+        --client-key=admin-key.pem
+
+    # kubectl config set-credentials admin \
+    #     --client-certificate=../../certs/admin/admin.pem \
+    #     --client-key=../../certs/admin/admin-key.pem
 
     kubectl config set-context k8s-context \
         --cluster=kubernetes-cluster \

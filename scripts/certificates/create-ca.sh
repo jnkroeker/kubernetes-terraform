@@ -14,9 +14,12 @@ check_prereqs () {
 
 create_ca_config () {
 
-    if [ ! \( -f "../../certs/certificate-authority/ca-config.json" -a -f "../../certs/certificate-authority/ca-csr.json" \) ]; then
+  # if [ ! \( -f "../../certs/certificate-authority/ca-config.json" -a -f "../../certs/certificate-authority/ca-csr.json" \) ]; then
+    if [ ! \( -f "ca-config.json" -a -f "ca-csr.json" \) ]; then
 
-cat > ../../certs/certificate-authority/ca-config.json <<EOF
+
+# cat > ../../certs/certificate-authority/ca-config.json <<EOF
+cat > ca-config.json <<EOF
 {
   "signing": {
     "default": {
@@ -32,7 +35,8 @@ cat > ../../certs/certificate-authority/ca-config.json <<EOF
 }
 EOF
 
-cat > ../../certs/certificate-authority/ca-csr.json <<EOF
+# cat > ../../certs/certificate-authority/ca-csr.json <<EOF
+cat > ca-csr.json <<EOF
 {
   "CN": "Kubernetes",
   "key": {
@@ -55,7 +59,8 @@ EOF
 }
 
 gen_ca_cert () {
-    cfssl gencert -initca ../../certs/certificate-authority/ca-csr.json | cfssljson -bare ../../certs/certificate-authority/ca
+  #cfssl gencert -initca ../../certs/certificate-authority/ca-csr.json | cfssljson -bare ../../certs/certificate-authority/ca
+  cfssl gencert -initca ca-csr.json | cfssljson -bare ca
 }
 
 check_prereqs

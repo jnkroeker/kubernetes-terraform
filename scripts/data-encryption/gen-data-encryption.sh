@@ -8,9 +8,10 @@ ENCRYPTION_KEY=$(head -c 32 /dev/urandom | base64)
 
 gen_encryption_config () {
 
-    if [ ! \( -f "../../data-encryption/encryption-config.yaml" \) ]; then
+  # if [ ! \( -f "../../data-encryption/encryption-config.yaml" \) ]; then
+  if [ ! \( -f "encryption-config.yaml" \) ]; then
 
-cat > ../../data-encryption/encryption-config.yaml <<EOF
+cat > encryption-config.yaml <<EOF
 kind: EncryptionConfig
 apiVersion: v1
 resources:
