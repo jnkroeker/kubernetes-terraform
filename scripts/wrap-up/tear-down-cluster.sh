@@ -15,6 +15,9 @@ tear_down() {
     gcloud compute routes delete kubernetes-route-10-200-1-0-24
 
     gcloud compute routes delete kubernetes-route-10-200-2-0-24
+
+    # delete certs, kubeconfigs
+    rm *.pem *.csr *.kubeconfig *.json *.yaml
 }
 
 tear_down

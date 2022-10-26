@@ -4,7 +4,7 @@ provision () {
     for instance in k8s-worker-0 k8s-worker-1 k8s-worker-2; do
 
         # this executes the script on each node by first ssh-ing into it
-        cat commands-to-execute-remotely.sh | gcloud compute ssh ${instance} 
+        cat ./scripts/workers/commands-to-execute-remotely.sh | gcloud compute ssh ${instance} 
 
     done
 }

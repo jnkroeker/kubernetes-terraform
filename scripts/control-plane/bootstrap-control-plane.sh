@@ -5,9 +5,9 @@ bootstrap_control_plane () {
     for instance in k8s-controller-0 k8s-controller-1 k8s-controller-2; do
 
         # this executes the script on each node by first ssh-ing into it
-        cat commands-to-execute-remotely.sh | gcloud compute ssh ${instance} 
+        cat ./scripts/control-plane/commands-to-execute-remotely.sh | gcloud compute ssh ${instance} 
 
-        cat enable-health-checks.sh | gcloud compute ssh ${instance}
+        cat ./scripts/control-plane/enable-health-checks.sh | gcloud compute ssh ${instance}
 
     done
 
@@ -17,6 +17,7 @@ bootstrap_control_plane
 
 ### Verification 
 
+# from inside a controller node execute...
 # command:
 #     kubectl cluster-info --kubeconfig admin.kubeconfig
 

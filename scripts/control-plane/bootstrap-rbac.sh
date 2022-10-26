@@ -7,7 +7,7 @@ bootstrap_rbac () {
 
     # this executes the script on the first controller node by first ssh-ing into it
     # command only needs to execute on one controller to effect the whole cluster
-    cat rbac-configuration.sh | gcloud compute ssh k8s-controller-0
+    cat ./scripts/control-plane/rbac-configuration.sh | gcloud compute ssh k8s-controller-0
 
 }
 

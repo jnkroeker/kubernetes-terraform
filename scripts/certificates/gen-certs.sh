@@ -15,7 +15,7 @@ check_prereqs () {
 gen_admin_client_cert () {
 
     # if [ ! -f "../../certs/admin/ca-csr.json" ]; then
-    if [ ! -f "ca-csr.json" ]; then
+    if [ ! -f "admin-csr.json" ]; then
 
 # cat > ../../certs/admin/admin-csr.json <<EOF
 cat > admin-csr.json <<EOF

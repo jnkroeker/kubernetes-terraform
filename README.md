@@ -1,5 +1,19 @@
 # Terraform a Kubernetes Cluster
 
+## Using makefile
+
+1. Execute `make k8s-up`
+
+### Once the cluster is up, perform a smoke test
+
+https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/13-smoke-test.md
+
+2. When finished exexute `make k8s-down`
+
+---
+
+## Manual script execution
+
 1. Execute `terraform plan` to see what GCP resources will be provisioned and `terraform apply` to realize the plan.
 
 2. create /certs sub-directories: admin, certificate-authority, controller-manager, kube-api-server, 
@@ -35,11 +49,7 @@ kube-proxy, kube-scheduler, kubelet-client, service-account
 
 17. Execute `./deploy-coredns.sh` from within scripts/dns directory
 
-## Once the cluster is up, perform a smoke test
-
-https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/13-smoke-test.md
-
-## Tear everything down when finished, or else you will have trouble starting another cluster
+### Tear everything down when finished, or else you will have trouble starting another cluster
 
 Execute `./tear-down-cluster.sh` in scripts/wrap-up then 
 
