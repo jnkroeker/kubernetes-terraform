@@ -54,3 +54,19 @@ kube-proxy, kube-scheduler, kubelet-client, service-account
 Execute `./tear-down-cluster.sh` in scripts/wrap-up then 
 
 Execute `terraform destroy` from project root (/kubernetes-terraform/)
+
+# Run Apache Spark on the cluster with spark-on-k8s-operator
+
+1. Install Helm if it is not already (verify with `helm help` command)
+
+2. Add the operator to your Helm repository
+
+    `helm repo add spark-operator https://googlecloudplatform.github.io/spark-on-k8s-operator`
+
+3. Install a release of your choice in the spark-operator namespace of the running cluster
+
+    `helm install <release> spark-operator/spark-operator --namespace spark-operator --create-namespace`
+
+4. Run example jobs from https://github.com/GoogleCloudPlatform/spark-on-k8s-operator &
+    
+    read the Quick Start Guide available in this repository
