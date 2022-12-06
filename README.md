@@ -2,71 +2,68 @@
 
 ## Using makefile
 
-1. Execute `make k8s-up`
+### Manual script execution
 
-### Once the cluster is up, perform a smoke test
+1. Execute `make form` to see what GCP resources will be provisioned and realize the plan.
 
-https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/13-smoke-test.md
+2. Execute `make certificates` to create a Certificate Authority, generate all necessary certificates for k8s from the Certificate Authority, and distribute the keys and certificates to the compute resources. The CA will be used to generate addional TLS certificates.
 
-2. When finished exexute `make k8s-down`
+3. Execute `make config` to create worker and controller kubeconfig files. 
 
----
+#### make config does not work quite right, see makefile for manual remedial steps
 
-## Manual script execution
+4. Execute `make encrypt` to create data encryption key and configuration file, then distribute the encryption config file to conroller nodes.
 
-1. Execute `terraform plan` to see what GCP resources will be provisioned and `terraform apply` to realize the plan.
+5. Execute `make etcd` to ssh into each controller, download etcd and configure a systemd service for etcd
 
-2. create /certs sub-directories: admin, certificate-authority, controller-manager, kube-api-server, 
-kube-proxy, kube-scheduler, kubelet-client, service-account
+6. Execute `make ctrl-plane` to configure kube API server, Controller Manager and Kube Scheduler on each controller node, bootstrap RBAC and bootstrap a frontend load balancer.
 
-3. Execute `./create-ca.sh` from within scripts/certificates directory to create a Certificate  Authority. The CA will be used to generate addional TLS certificates.
+7. Execute `make workers` to provision the worker nodes.
 
-4. Execute `./gen-certs.sh` from within scripts/certificates directory to generate all necessary certificates for k8s from the Certificate Authority.
+8. Execute `make kubectl` to create kubectl kubeconfig
 
-5. Execute `./distribute-certs.sh` from within scripts/certificates directory to move all the correct keys and certificates to the compute resources.
+9. Execute `make pod-network` 
 
-6. Execute `./gen-kubeconfigs.sh` from within scripts/kubeconfig directory to create worker and controller kubeconfig files.
-
-7. Execute `./distribute-kubeconfigs.sh` from within scripts/kubeconfig directory to distribute the kubeconfig files.
-
-8. Execute `./gen-data-encryption.sh` from within scripts/data-encryption directory to create data encryption key and configuration file.
-
-9. Execute `./distribute-data-encryption.sh` from within scripts/data-encryption directory to distribute the encryption config file to conroller nodes.
-
-10. Execute `./bootstrap-etcd.sh` from within scripts/etcd directory to ssh into each controller, download etcd and configure a systemd service for etcd
-
-11. Execute `./bootstrap-control-plane.sh` from within scripts/control-plane directory to configure kube API server, Controller Manager and Kube Scheduler on each controller node.
-
-12. Execute `./bootstrap-rbac.sh` from within scripts/control-plane directory
-
-13. Execute `./bootstrap-front-end-lb.sh` from within scripts/control-plane directory
-
-14. Execute `./provision-workers.sh` from within scripts/workers directory
-
-15. Execute `./gen-kubectl-kubeconfig.sh` from within scripts/kubeconfig directory
-
-16. Execute `./provision-pod-network.sh` from within scripts/pod-network
-
-17. Execute `./deploy-coredns.sh` from within scripts/dns directory
+10. Execute `make dns` 
 
 ### Tear everything down when finished, or else you will have trouble starting another cluster
 
-Execute `./tear-down-cluster.sh` in scripts/wrap-up then 
+Execute `make k8s-down`
 
-Execute `terraform destroy` from project root (/kubernetes-terraform/)
+### Helpful debug commands to ensure all services running
+
+`kubectl get all -A`
+
+`kubectl get events -w`
+
+`kubectl get componentstatuses`
+
+`kubectl get nodes`
 
 # Run Apache Spark on the cluster with spark-on-k8s-operator
 
-1. Install Helm if it is not already (verify with `helm help` command)
+1. Install Helm if it is not already (verify installation with `helm help` command)
 
 2. Add the operator to your Helm repository
 
     `helm repo add spark-operator https://googlecloudplatform.github.io/spark-on-k8s-operator`
 
-3. Install a release of your choice in the spark-operator namespace of the running cluster
+3. See what charts you can install from spark-operator repo
 
-    `helm install <release> spark-operator/spark-operator --namespace spark-operator --create-namespace`
+    `helm search repo spark-operator`
 
-4. Run example jobs from https://github.com/GoogleCloudPlatform/spark-on-k8s-operator &
+4. Install a release of your naming in the spark-operator namespace of the running cluster
+
+    `helm install --replace <choose any release name> spark-operator/spark-operator --namespace spark-operator --create-namespace --set sparkJobNamespace=spark-jobs --set webhook.enable=true`
+
+5. Show a list of all deployed releases
+
+    `helm list --namespace spark-operator`
+
+6. Clone https://github.com/GoogleCloudPlatform/spark-on-k8s-operator
+
+7. Run example jobs from https://github.com/GoogleCloudPlatform/spark-on-k8s-operator &
     
     read the Quick Start Guide available in this repository
+
+### see documentation.txt for more information on working with this cluster

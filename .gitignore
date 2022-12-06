@@ -2,17 +2,18 @@
 **/.terraform/*
 
 # Never publish certificates
-**/certs/*
-
-# kubeconfig files
-/kubeconfig/*
-
-# data encryption configuration
-/data-encryption/*
+**/credentials/*
 
 # .tfstate files
 *.tfstate
 *.tfstate.*
+
+# files generated from scripts
+*.pem 
+*.csr 
+*.kubeconfig 
+*.json 
+*.yaml
 
 # .tflock
 .terraform.lock.hcl

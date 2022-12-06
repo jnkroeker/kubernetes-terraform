@@ -1,17 +1,10 @@
 SHELL:=/bin/bash
 .ONESHELL:
 
-k8s-up: 
-		form
-		certs
-		kubeconfig
-		encrypt
-		etcd
-		ctrl-plane
-		workers
-		kubectl
-		pod-network
-		dns
+# DONOT RUN k8s-up becuase config command requires manual intervention
+#
+# Execute only one at a time
+k8s-up: form certificates config encrypt etcd ctrl-plane workers kubectl pod-network dns
 
 k8s-down:
 		./scripts/wrap-up/tear-down-cluster.sh
@@ -29,6 +22,15 @@ certificates:
 config:
 		./scripts/kubeconfig/gen-kubeconfigs.sh
 		./scripts/kubeconfig/distribute-kubeconfigs.sh
+# ^^^^^
+# config errors on creating default context for kube-proxy.kubeconfig
+# manually ssh into each k8s-worker-{1,2,3} node and edit kube-proxy.kubeconfig with
+# contexts: 
+# - context:
+#     cluster: kubernetes-cluster
+#     user: system:kube-proxy
+#   name: default
+# current-context: default
 
 encrypt:
 		./scripts/data-encryption/gen-data-encryption.sh

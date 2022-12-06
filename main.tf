@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-    credentials = file("./certs/k8s-the-hard-way-tf-342523-a8c92947c013.json")
+    credentials = file("./credentials/gcp-service-account.json")
 
     project = var.project
     region  = var.region

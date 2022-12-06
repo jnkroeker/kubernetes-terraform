@@ -1,0 +1,61 @@
+In order to run an example SparkApplication using the spark-on-k8s-operator, 
+
+we need to assign the SparkApplication a Service Account (https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
+
+A ServiceAccount provides an identity for a process that runs in a Pod.
+
+In this case it allows for the SparkApplication to run in the cluster (and thus have a relationship with the Control Plane)
+
+by authenticating to the API Server.
+
+`kubectl get serviceaccounts` will list service accounts on the cluster. 
+
+Add `--namespace <ns>` to the end of the above command, specifying the sparkJobNamespace from your `helm install` command
+
+In the resulting list, the ServiceAccount <helm release>-spark was created by installing spark-on-k8s-operator
+
+set this as the ServiceAccount in the example yaml files before executing them against the cluster
+
+    (i.e. change metadata.namespace and spec.driver.serviceAccount in spark-pi.yaml to spark-jobs and phaction-spark respectively
+     if your helm install was like: 'helm install --replace phaction ... sparkJobNamespace=spark-jobs')
+
+* Note: this is likely to fail multiple times
+
+    to debug:
+
+        check the ServiceApplication status: `kubectl describe sparkapplication spark-pi --namespace <job ns>`
+
+                                             `kubectl get sparkapplication spark-pi --namespace <job ns>`
+
+        look at the pods in the job's namespace: `kubectl get pods --namespace <job ns>`
+
+                                                 `kubectl describe pods/<pod name> --namespace <job ns>`
+
+                                                 `kubectl logs <pod name> --namespace <job ns>`
+
+        delete the failing SparkApplication and retry: `kubectl delete sparkapplication <name>`
+
+11-24-2022:
+
+    Trying to run example 1, seeing errors like:
+
+    `
+    io.fabric8.kubernetes.client.KubernetesClientException: 
+        Operation: [get]  for kind: [Pod]  with name: [spark-pi-driver]  in namespace: [spark-jobs]  failed.
+    `
+
+    in failing spark-pi-driver logs (kubectl logs spark-pi-driver).
+
+    `kubectl describe pods/spark-pi-driver --namespace <job ns>` shows FailedMount of volume that has type ConfigMap
+
+    I have been seeing error reports about rbac.yaml files need to be updated to allow RBAC (issue 1314)
+
+11-26-2022:
+
+    Moving on from attempting to install spark operator in favor of general k8s exploration.
+
+    Will return to this; monitor this GitHub issue https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/issues/1619
+
+    
+
+
