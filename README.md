@@ -67,3 +67,7 @@ Execute `make k8s-down`
     read the Quick Start Guide available in this repository
 
 ### see documentation.txt for more information on working with this cluster
+
+# Run Apache Kafka with Strimzi 
+
+https://strimzi.io/docs/operators/in-development/deploying.html
