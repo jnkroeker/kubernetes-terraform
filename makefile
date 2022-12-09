@@ -24,13 +24,16 @@ config:
 		./scripts/kubeconfig/distribute-kubeconfigs.sh
 # ^^^^^
 # config errors on creating default context for kube-proxy.kubeconfig
-# manually ssh into each k8s-worker-{1,2,3} node and edit kube-proxy.kubeconfig with
+# manually ssh into each k8s-worker-{0,1,2} node and edit kube-proxy.kubeconfig with
 # contexts: 
 # - context:
 #     cluster: kubernetes-cluster
 #     user: system:kube-proxy
 #   name: default
 # current-context: default
+# 
+# occasionally errors creating clusters in k8s-worker{0,1,2}.kubeconfig
+# just verify all kubeconfig files before proceeding
 
 encrypt:
 		./scripts/data-encryption/gen-data-encryption.sh
@@ -55,3 +58,9 @@ pod-network:
 
 dns:
 		./scripts/dns/deploy-coredns.sh
+
+# Verify cluster by making a deployment:
+# `kubectl create deployment nginx --image=nginx`
+#
+# `kubectl get pods -l app=nginx` should show
+# nginx-6799fc88d8-p5f27   1/1     Running   0          17s

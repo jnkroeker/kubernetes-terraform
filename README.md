@@ -40,7 +40,11 @@ Execute `make k8s-down`
 
 `kubectl get nodes`
 
+`kubectl auth can-i <verb> <resource>` (ie ... create service monitor) `--as=system:serviceaccount:<namespace>:<serviceaccountname> [-n <namespace>]`
+
 # Run Apache Spark on the cluster with spark-on-k8s-operator
+
+#### Requires Spark >= v3.2 :  v3.3 installed on laptop in /opt/spark/
 
 1. Install Helm if it is not already (verify installation with `helm help` command)
 
@@ -54,11 +58,19 @@ Execute `make k8s-down`
 
 4. Install a release of your naming in the spark-operator namespace of the running cluster
 
+    this works ->
+
+    `helm install my-release spark-operator/spark-operator --namespace spark-operator --create-namespace`
+
+    this doesnt ->
+    
     `helm install --replace <choose any release name> spark-operator/spark-operator --namespace spark-operator --create-namespace --set sparkJobNamespace=spark-jobs --set webhook.enable=true`
 
-5. Show a list of all deployed releases
+    b. this creates a ServiceAccount in spark-operator namespace called my-release-spark
 
-    `helm list --namespace spark-operator`
+5. Show status of deployment
+
+    `$ helm status --namespace spark-operator my-release`
 
 6. Clone https://github.com/GoogleCloudPlatform/spark-on-k8s-operator
 

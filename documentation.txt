@@ -56,6 +56,26 @@ set this as the ServiceAccount in the example yaml files before executing them a
 
     Will return to this; monitor this GitHub issue https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/issues/1619
 
+12-08-2022:
+
+    A ClusterRoleBinding binds a role to a subject. A subject can be a Group, User or ServiceAccount.
+
+    ClusterRoles apply to the cluster as a whole. Roles apply to a particular namespace.
+
+    `kubectl get serviceaccounts --namespace spark-operator` will show the ServiceAccount that has been created for Spark.
+
+    `kubectl get roles --namespace spark-operator` will show the roles in the namespace
+
+    `kubectl get clusterrolebindings --namespace spark-operator` shows the ClusterRoleBindings
+
+    executing `kubectl get clusterroles --all-namespaces` you will see the cluster-admin ClusterRole
+
+    gave my-release-spark ServiceAccount the cluster-admin ClusterRole through a new ClusterRoleBinding.
+
+    `kubectl create clusterrolebinding spark-admin --clusterrole=cluster-admin --serviceaccount=spark-operator:my-release-spark`
+
+    Still errors relating to being unable to find a required ConfigMap
+
     
 
 
