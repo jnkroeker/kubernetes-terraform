@@ -83,3 +83,5 @@ Execute `make k8s-down`
 # Run Apache Kafka with Strimzi 
 
 https://strimzi.io/docs/operators/in-development/deploying.html
+
+https://strimzi.io/docs/operators/in-development/deploying.html#deploying-cluster-operator-helm-chart-str
