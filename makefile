@@ -23,6 +23,8 @@ config:
 		./scripts/kubeconfig/gen-kubeconfigs.sh
 		./scripts/kubeconfig/distribute-kubeconfigs.sh
 # ^^^^^
+# 01-02-23: the following may be obselete after discovering a bug today, but verify a few times before deleting
+#
 # config errors on creating default context for kube-proxy.kubeconfig
 # manually ssh into each k8s-worker-{0,1,2} node and edit kube-proxy.kubeconfig with
 # contexts: 
@@ -58,6 +60,18 @@ pod-network:
 
 dns:
 		./scripts/dns/deploy-coredns.sh
+
+# check each worker node that systemd services are up
+# sudo systemctl status containerd kubelet kube-proxy
+# ^^^ kubelet has a tendency to not work
+#
+# check that <k8s-worker-#>-key.pem <k8s-worker-#>.pem made it to /var/lib/kubelet/
+# and that ca.pem made it to /var/lib/kubernetes/
+# then run sudo systemctl restart kubelet
+# verify kubelet is working with command: kubectl get nodes on each worker
+#
+# check each controller node that systemd services are up
+# sudo systemctl status kube-apiserver kube-controller-manager kube-scheduler
 
 # Verify cluster by making a deployment:
 # `kubectl create deployment nginx --image=nginx`

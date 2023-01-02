@@ -26,11 +26,11 @@ gen_kubectl_kubeconfig () {
     #     --client-certificate=../../certs/admin/admin.pem \
     #     --client-key=../../certs/admin/admin-key.pem
 
-    kubectl config set-context k8s-context \
+    kubectl config set-context default \
         --cluster=kubernetes-cluster \
         --user=admin
 
-    kubectl config use-context k8s-context
+    kubectl config use-context default
 }
 
 gen_kubectl_kubeconfig

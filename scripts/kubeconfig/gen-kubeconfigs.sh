@@ -48,7 +48,7 @@ gen_kube_proxy_kubeconfig() {
     --kubeconfig=kube-proxy.kubeconfig
 
     kubectl config set-context default \
-    --cluster=kubernetes-cluster \ 
+    --cluster=kubernetes-cluster \
     --user=system:kube-proxy \
     --kubeconfig=kube-proxy.kubeconfig
 

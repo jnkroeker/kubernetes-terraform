@@ -85,3 +85,17 @@ Execute `make k8s-down`
 https://strimzi.io/docs/operators/in-development/deploying.html
 
 https://strimzi.io/docs/operators/in-development/deploying.html#deploying-cluster-operator-helm-chart-str
+
+# Run shpod containers for kubernetes training
+
+1. execute `kubectl apply -f https://raw.githubusercontent.com/jpetazzo/shpod/main/shpod.yaml`
+
+    this will deploy a new pod to your k8s cluster
+
+2. execute `kubectl attach --namespace=shpod -ti shpod` 
+
+    this opens a terminal into the container running in the pod
+
+* 12-13-22 at this time cannot execute kubectl commands from inside the opened terminal
+
+    Error: Unable to connect to the server: dial tcp: lookup kubernetes.default.svc: i/o timeout
