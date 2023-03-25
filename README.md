@@ -24,11 +24,15 @@
 
 9. Execute `make pod-network` 
 
-10. Execute `make dns` 
+10. Execute `make dns` then see /scripts/dns/deploy-coredns.sh for verification steps. 
+        
+        ** If you don't see any output then it didnt run! ** 
 
 ### Tear everything down when finished, or else you will have trouble starting another cluster
 
 Execute `make k8s-down`
+
+    source ~/.zshrc if gcloud compute command does not work the first time
 
 ### Helpful debug commands to ensure all services running
 

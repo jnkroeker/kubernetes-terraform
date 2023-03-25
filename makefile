@@ -9,7 +9,7 @@ k8s-up: form certificates config encrypt etcd ctrl-plane workers kubectl pod-net
 k8s-down:
 		./scripts/wrap-up/tear-down-cluster.sh
 		terraform destroy
-		# add something do delete all from the certs sub-directories, data-encryption and kubeconfig
+# add something do delete all from the certs sub-directories, data-encryption and kubeconfig
 
 form:
 		terraform apply
@@ -62,16 +62,22 @@ dns:
 		./scripts/dns/deploy-coredns.sh
 
 # check each worker node that systemd services are up
-# sudo systemctl status containerd kubelet kube-proxy
+# sudo systemctl status containerd 
+# sudo systemctl status kubelet 
+# sudo systemctl status kube-proxy
 # ^^^ kubelet has a tendency to not work
 #
-# check that <k8s-worker-#>-key.pem <k8s-worker-#>.pem made it to /var/lib/kubelet/
+# Verify kubelet is working with command: `kubectl get nodes` on each worker.
+# If it does not find other nodes then the kubelet service requires a restart.
+# Check that <k8s-worker-#>-key.pem <k8s-worker-#>.pem made it to /var/lib/kubelet/
 # and that ca.pem made it to /var/lib/kubernetes/
-# then run sudo systemctl restart kubelet
-# verify kubelet is working with command: kubectl get nodes on each worker
+# then run `sudo systemctl restart kubelet`.
+# Rerun `kubectl get nodes` on each worker
 #
 # check each controller node that systemd services are up
-# sudo systemctl status kube-apiserver kube-controller-manager kube-scheduler
+# sudo systemctl status kube-apiserver 
+# sudo systemctl status kube-controller-manager 
+# sudo systemctl status kube-scheduler
 
 # Verify cluster by making a deployment:
 # `kubectl create deployment nginx --image=nginx`
