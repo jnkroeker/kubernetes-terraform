@@ -60,6 +60,12 @@ pod-network:
 
 dns:
 		./scripts/dns/deploy-coredns.sh
+# ^^^^^
+# 04-07-23: deploy-coredns.sh does not execute properly; no terminal output on `make dns`
+# 
+# execute the kubectl command in deploy-coredns.sh manually from the terminal
+
+# -----------------------------------
 
 # check each worker node that systemd services are up
 # sudo systemctl status containerd 
