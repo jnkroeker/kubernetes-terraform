@@ -90,3 +90,8 @@ dns:
 #
 # `kubectl get pods -l app=nginx` should show
 # nginx-6799fc88d8-p5f27   1/1     Running   0          17s
+
+external-access:
+
+		./scripts/external/provision-ip-lb.sh
+		./scripts/external/install-configure-nginx.sh

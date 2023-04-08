@@ -28,6 +28,8 @@
         
         ** If you don't see any output then it didnt run! ** 
 
+11. Execute `make external-access` to configure static IP address, load balancer and nginx for external traffic
+
 ### Tear everything down when finished, or else you will have trouble starting another cluster
 
 Execute `make k8s-down`
