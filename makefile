@@ -55,3 +55,8 @@ pod-network:
 
 dns:
 		./scripts/dns/deploy-coredns.sh
+
+external-access:
+
+		./scripts/external/provision-ip-lb.sh
+		./scripts/external/install-configure-nginx.sh
