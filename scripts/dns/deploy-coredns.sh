@@ -1,7 +1,7 @@
 #!/bin/bash
 
 deploy_core_dns () {
-    kubectl apply -f https://storage.googleapis.com/kubernetes-the-hard-way/coredns-1.8.yaml 
+    kubectl apply -f https://raw.githubusercontent.com/kelseyhightower/kubernetes-the-hard-way/master/deployments/coredns-1.7.0.yaml
 }
 
 # Verification
