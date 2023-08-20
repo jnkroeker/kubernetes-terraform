@@ -1,0 +1,23 @@
+Once K8s cluster is up, following the README.md, to get a Kafka cluster on the cluster
+I use Strimzi and Strimzi's provided Helm chart.
+
+1. helm repo add strimzi https://strimzi.io/charts/
+
+2. helm install strimzi/strimzi-kafka-operator
+
+3. deploy Kafka using a yaml file provided here: https://github.com/strimzi/strimzi-kafka-operator/tree/main/examples/kafka
+
+    a. kafka-persistent.yaml        -> persistent cluster with 3 Zookeeper nodes and 3 Kafka nodes
+    b. kakfa-jbod.yaml              -> persistent cluster, 3 Zookeeper nodes, 3 Kafka nodes, each with multiple persistent volumes
+    c. kafka-persistent-single.yaml -> persistent cluster, 1 Zookeeper node, 1 Kafka node
+    d. kafka-ephemeral.yaml         -> ephemeral cluster, 3 Zookeeper nodes, 3 Kafka nodes
+    e. kafka-ephemeral-single.yaml  -> ephemeral cluster, 3 Zookeeper nodes, 1 Kafka node
+
+    persistent cluster uses persistent volumes to store Zookeeper and Kakfa data.
+    ephemeral clusters are suitable for dev, it uses 'emptyDir' volumes which are deleted when the pod goes down
+
+    * using kafka-ephemeral-single.yaml for testing 
+
+4. kubectl apply -f ~/kubernetes-the-hard-way/kubernetes-terraform/kafka/kakfa-ephemeral-single.yaml
+
+    * ensure CoreDNS is running: `kubectl get pods -l k8s-app=kube-dns -n kube-system`

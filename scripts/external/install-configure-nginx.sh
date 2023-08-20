@@ -25,7 +25,7 @@ server {
     server_name ${KHYME_STATIC_IP}
 
     location / {
-        proxy_pass  http://0.0.0.0:30080/v1/tasks/1/1
+        proxy_pass  http://0.0.0.0:3000/status
     }
 }
 EOF
@@ -40,6 +40,9 @@ EOF
 
     done
 }
+
+install_nginx
+configure_nginx
 
 #
 #  proxy_pass endpoint must match the port number exposed by the tasker-service NodePort

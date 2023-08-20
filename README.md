@@ -24,13 +24,17 @@
 
 9. Execute `make pod-network` 
 
-10. Execute `make dns` 
+10. Execute `make dns` then see /scripts/dns/deploy-coredns.sh for verification steps. 
+        
+        ** If you don't see any output then it didnt run! ** 
 
 11. Execute `make external-access` to configure static IP address, load balancer and nginx for external traffic
 
 ### Tear everything down when finished, or else you will have trouble starting another cluster
 
 Execute `make k8s-down`
+
+    source ~/.zshrc if gcloud compute command does not work the first time
 
 ### Helpful debug commands to ensure all services running
 
@@ -42,7 +46,11 @@ Execute `make k8s-down`
 
 `kubectl get nodes`
 
+`kubectl auth can-i <verb> <resource>` (ie ... create service monitor) `--as=system:serviceaccount:<namespace>:<serviceaccountname> [-n <namespace>]`
+
 # Run Apache Spark on the cluster with spark-on-k8s-operator
+
+#### Requires Spark >= v3.2 :  v3.3 installed on laptop in /opt/spark/
 
 1. Install Helm if it is not already (verify installation with `helm help` command)
 
@@ -56,11 +64,19 @@ Execute `make k8s-down`
 
 4. Install a release of your naming in the spark-operator namespace of the running cluster
 
+    this works ->
+
+    `helm install my-release spark-operator/spark-operator --namespace spark-operator --create-namespace`
+
+    this doesnt ->
+    
     `helm install --replace <choose any release name> spark-operator/spark-operator --namespace spark-operator --create-namespace --set sparkJobNamespace=spark-jobs --set webhook.enable=true`
 
-5. Show a list of all deployed releases
+    b. this creates a ServiceAccount in spark-operator namespace called my-release-spark
 
-    `helm list --namespace spark-operator`
+5. Show status of deployment
+
+    `$ helm status --namespace spark-operator my-release`
 
 6. Clone https://github.com/GoogleCloudPlatform/spark-on-k8s-operator
 
@@ -75,3 +91,17 @@ Execute `make k8s-down`
 https://strimzi.io/docs/operators/in-development/deploying.html
 
 https://strimzi.io/docs/operators/in-development/deploying.html#deploying-cluster-operator-helm-chart-str
+
+# Run shpod containers for kubernetes training
+
+1. execute `kubectl apply -f https://raw.githubusercontent.com/jpetazzo/shpod/main/shpod.yaml`
+
+    this will deploy a new pod to your k8s cluster
+
+2. execute `kubectl attach --namespace=shpod -ti shpod` 
+
+    this opens a terminal into the container running in the pod
+
+* 12-13-22 at this time cannot execute kubectl commands from inside the opened terminal
+
+    Error: Unable to connect to the server: dial tcp: lookup kubernetes.default.svc: i/o timeout
