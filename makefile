@@ -66,6 +66,8 @@ dns:
 # execute the kubectl command in deploy-coredns.sh manually from the terminal
 
 # -----------------------------------
+# ALWAYS CHECK KUBECTL ON WORKERS
+# -----------------------------------
 
 # check each worker node that systemd services are up
 # sudo systemctl status containerd 
@@ -81,9 +83,15 @@ dns:
 # Rerun `kubectl get nodes` on each worker
 #
 # check each controller node that systemd services are up
+# restarting these seems to help kubectl as well
 # sudo systemctl status kube-apiserver 
 # sudo systemctl status kube-controller-manager 
 # sudo systemctl status kube-scheduler
+
+# =============================================
+# if this is STILL not working, copy the kubeconfig file in /var/lib/kubelet/kubeconfig
+# to ~/.kube/config in worker nodes and from /var/lib/kubernetes/kube-controller-manager.kubeconfig
+# on controllers to ~/.kube/config
 
 # Verify cluster by making a deployment:
 # `kubectl create deployment nginx --image=nginx`

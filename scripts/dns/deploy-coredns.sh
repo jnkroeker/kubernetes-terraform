@@ -2,6 +2,7 @@
 
 deploy_core_dns () {
     kubectl apply -f https://raw.githubusercontent.com/kelseyhightower/kubernetes-the-hard-way/master/deployments/coredns-1.7.0.yaml
+    # kubectl apply -f https://k8s.io/examples/admin/dns/dnsutils.yaml
 }
 
 # Verification

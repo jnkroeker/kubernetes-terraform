@@ -1,0 +1,9 @@
+server {
+    listen 80;
+
+    server_name 34.145.247.222;
+
+    location / {
+        proxy_pass  http://0.0.0.0:30080/status;
+    }
+}
