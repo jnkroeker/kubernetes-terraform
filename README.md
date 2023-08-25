@@ -30,6 +30,10 @@
 
 11. Execute `make external-access` to configure static IP address, load balancer and nginx for external traffic
 
+12. In each worker node, set the namespace in the default configuration to the namespace your primary apps are in
+
+        `kubectl config set-context --current --namespace=phaction-system`
+
 ### Tear everything down when finished, or else you will have trouble starting another cluster
 
 Execute `make k8s-down`

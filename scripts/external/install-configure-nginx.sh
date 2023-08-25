@@ -29,6 +29,7 @@ server {
 
     location / {
         proxy_pass  http://${INTERNAL_IP}:30080/status;
+        
     }
 }
 EOF
